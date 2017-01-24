@@ -18,11 +18,10 @@ def directory(name, recurse=False, indent=0, file_filter='*', dir_filter='*'):
     ret = []
     for root, dirs, files in os.walk(name):
         root_base = os.path.basename(root)
-        if not fnmatch.fnmatch(root_base, dir_filter):
-            continue
-        for fn in files:
-            if fnmatch.fnmatch(fn, file_filter):
-                ret.extend(file(os.path.join(root, fn), indent=indent))
+        if fnmatch.fnmatch(root_base, dir_filter):
+            for fn in files:
+                if fnmatch.fnmatch(fn, file_filter):
+                    ret.extend(file(os.path.join(root, fn), indent=indent))
         if not recurse:
             break
     return ret
